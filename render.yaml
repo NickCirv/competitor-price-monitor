@@ -1,0 +1,17 @@
+# Render.com Cron Job Blueprint
+
+services:
+  - type: cron
+    name: competitor-price-monitor
+    runtime: node
+    plan: free
+    schedule: "0 */12 * * *"  # Every 12 hours
+    buildCommand: npm install
+    startCommand: node src/index.js --config products.json
+    envVars:
+      - key: APIFY_TOKEN
+        sync: false
+      - key: SLACK_WEBHOOK
+        sync: false
+      - key: NODE_ENV
+        value: production

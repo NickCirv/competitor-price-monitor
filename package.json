@@ -1,0 +1,19 @@
+{
+  "name": "competitor-price-monitor",
+  "version": "1.0.0",
+  "description": "Automated competitor price tracking with change detection and alerts",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "check": "node src/index.js --config products.json",
+    "test": "node src/index.js --config products.example.json"
+  },
+  "keywords": ["ecommerce", "price-tracking", "competitor-analysis", "apify"],
+  "author": "Cirvgreen",
+  "license": "MIT",
+  "dependencies": {
+    "apify-client": "^2.9.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  }
+}
