@@ -1,3 +1,5 @@
+![Banner](banner.svg)
+
 # Competitor Price Monitor - MCP Automated PRD
 
 **Created:** 2026-01-23
