@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node src/index.js",
     "check": "node src/index.js --config products.json",
-    "test": "node src/index.js --config products.example.json"
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "keywords": ["ecommerce", "price-tracking", "competitor-analysis", "apify"],
   "author": "Cirvgreen",
