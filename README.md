@@ -1,50 +1,70 @@
-<div align="center">
+![Nicholas Ashkar — competitor-price-monitor](assets/nicholas-ashkar/banner.png)
 
 # competitor-price-monitor
 
-**Track Amazon, Shopify, and custom product pages — get Slack alerts the moment a competitor changes their price.**
+Collects configured product prices and compares them with saved observations.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-0B0A09?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![Node](https://img.shields.io/badge/Node-18%2B-0B0A09?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org)
 
-</div>
 
-## Install
+<a id="usage"></a>
 
-```bash
-git clone https://github.com/NickCirv/competitor-price-monitor.git
-cd competitor-price-monitor
-npm install
-cp .env.example .env   # add APIFY_TOKEN and SLACK_WEBHOOK
-```
-
-## Usage
-
-```bash
-# Run a price check against your product list
-node src/index.js --config products.json
-```
-
-**products.json** format:
-
-```json
-{
-  "products": [
-    { "type": "amazon",  "asin": "B0XXXXXX",                          "name": "Rival Product" },
-    { "type": "shopify", "url": "https://store.example.com/products/item" },
-    { "type": "generic", "url": "https://site.example.com/product",    "priceSelector": ".price" }
-  ]
-}
-```
-
-| Flag | Description |
-|------|-------------|
-| `--config <path>` | Path to products JSON file (default: `products.json`) |
+<a id="run-a-price-check-against-your-product-list"></a>
 
 ## What it does
 
-Reads a list of product URLs, scrapes current prices via Apify (Amazon, Shopify, or any site with a CSS price selector), and compares against the last saved snapshot. When a price or stock status changes, it sends a Slack block-kit alert and saves a Markdown report to `reports/`. History is persisted in `data/price_history.json` so every subsequent run only reports net-new changes.
+- Amazon, Shopify and selector-based inputs.
+- Saved price history.
+- Change detection.
+- Markdown reporting and optional Slack alerts.
 
----
 
-<sub>Dependencies: apify-client, axios, dotenv · Node 18+ · MIT · by <a href="https://github.com/NickCirv">NickCirv</a></sub>
+<a id="install"></a>
+
+## Quickstart
+
+Prerequisites: Node.js `>=20` and npm. The checkout below pins the source used for this documentation.
+
+```sh
+git clone https://github.com/NickCirv/competitor-price-monitor.git
+cd competitor-price-monitor
+git checkout eca3946d49c78c52a4f762bfe02c992ef2c01b38
+npm install
+```
+
+In the cloned directory:
+
+Create `products.json` with a product endpoint you are authorized to query. This shape is illustrative; replace the example URL:
+
+```json
+{"products":[{"type":"shopify","url":"https://store.example/products/item"}]}
+```
+
+```sh
+node src/index.js --config products.json
+```
+
+**Expected behavior (illustrative, not captured):** With a valid product config and required credentials, generates price observations and a change report.
+
+Examples are source-inspected, **not runtime-tested**. See the research record for verification gaps.
+
+## Boundaries and data
+
+Amazon/generic capture uses Apify; optional alerts use SLACK_WEBHOOK. Shopify uses the first variant and defaults currency to USD, so prices are not normalized across markets. The script itself does not provide a scheduler.
+
+## Development
+
+The manifest defines `npm test` as:
+
+```sh
+node --test
+```
+
+The captured suite is a smoke check, not end-to-end behavior coverage. Examples include “entry is valid JavaScript”. Tests were not run for this documentation revision.
+
+See [implementation and command reference](docs/REFERENCE.md) for the package scripts and inspected interfaces, and [research record](docs/RESEARCH.md) for the pinned source, document decisions and unresolved checks.
+
+## License and contact
+
+See [LICENSE](LICENSE) for the original terms and attribution. Legal text is unchanged.
+
+[Nicholas Ashkar](https://nicholashkar.com/) · [Discuss a project](https://nicholashkar.com/#oxblood-contact)
